@@ -1,0 +1,30 @@
+#java specific
+*.class
+
+#netbeans ignore personal stuff 
+nbproject/private/
+
+#eclipse/Maven/git specific
+*target/*
+target/*
+bin/*
+.classpath
+.project
+.settings/*
+
+
+#powershell scripts
+#*.sh
+
+## generic files to ignore
+*~
+*.lock
+*.DS_Store
+*.swp
+*.out
+
+# specific files
+out.txt
+err.txt
+app.json
+zmdb_settings.txt
