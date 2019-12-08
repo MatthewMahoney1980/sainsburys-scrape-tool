@@ -11,10 +11,13 @@ public class PageProcessor {
 		return doc.select(elementType);
 	}
 	
-	public Element getFirstLinkFromGridItem(Element gridItem) {
+	public String getFirstLinkURLFromGridItem(Element gridItem) {
 		Elements links = getAllElementsOfType(gridItem.toString(), "a[href]");
 		if (links.size() > 0) {
-			return links.get(0);
+			String linkURL = links.get(0).attr("href");
+			String processedLinkURL = "https://jsainsburyplc.github.io/serverside-test/site/www.sainsburys.co.uk" +
+					linkURL.substring(linkURL.indexOf("/shop"));
+			return processedLinkURL;
 		}
 		return null;
 	}
