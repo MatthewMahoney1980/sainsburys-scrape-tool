@@ -55,4 +55,23 @@ public class ScrapeToolTest {
 		}
 		assertEquals(elements.size(), 17);
 	}
+	
+	@Test
+	public void when_GridItemProvided_then_CanExtractLinkToDetailPage() {
+		String content;
+		try {
+			content = FileUtils.readFileToString(new File("src/test/resources/gridItem.html"), StandardCharsets.UTF_8);
+		}
+		catch (IOException e) {
+			fail("Could not read source file from test resources");
+			return;
+		}
+		
+		PageProcessor pageProcessor = new PageProcessor();
+		Elements gridItems = pageProcessor.getAllElementsOfType(content, "li.gridItem");
+		Element gridItem = gridItems.get(0);
+		
+		Element link = pageProcessor.getFirstLinkFromGridItem(gridItem);
+		assertEquals(link.attr("href"), "../../../../../../shop/gb/groceries/berries-cherries-currants/sainsburys-british-strawberries-400g.html");
+	}
 }
