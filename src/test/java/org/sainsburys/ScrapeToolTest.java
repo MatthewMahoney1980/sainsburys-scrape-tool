@@ -72,7 +72,7 @@ public class ScrapeToolTest {
 		Elements gridItems = pageProcessor.getAllElementsOfType(content, "li.gridItem");
 		Element gridItem = gridItems.get(0);
 		
-		Element link = pageProcessor.getFirstLinkFromGridItem(gridItem);
-		assertEquals(link.attr("href"), "../../../../../../shop/gb/groceries/berries-cherries-currants/sainsburys-british-strawberries-400g.html");
+		String linkURL = pageProcessor.getFirstLinkURLFromGridItem(gridItem);
+		assertEquals(linkURL, "https://jsainsburyplc.github.io/serverside-test/site/www.sainsburys.co.uk/shop/gb/groceries/berries-cherries-currants/sainsburys-british-strawberries-400g.html");
 	}
 }
