@@ -16,9 +16,12 @@ import org.junit.Test;
 
 public class ScrapeToolTest {
 	
+	public static PageProcessor pageProcessor;
+	
 	@BeforeClass
 	public static void setup() {
 		System.setProperty("https.protocols", "TLSv1.2");
+		pageProcessor = new PageProcessor();
 	}
 	
 	@Test
@@ -47,7 +50,6 @@ public class ScrapeToolTest {
 			return;
 		}
 		
-		PageProcessor pageProcessor = new PageProcessor();
 		Elements elements = pageProcessor.getAllElementsOfType(content, "li.gridItem");
 		for (Element element : elements) {
 			assertEquals(element.tagName(), "li");
@@ -67,7 +69,6 @@ public class ScrapeToolTest {
 			return;
 		}
 		
-		PageProcessor pageProcessor = new PageProcessor();
 		Elements gridItems = pageProcessor.getAllElementsOfType(content, "li.gridItem");
 		Element gridItem = gridItems.get(0);
 		
