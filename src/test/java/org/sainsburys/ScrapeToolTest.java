@@ -61,6 +61,7 @@ public class ScrapeToolTest {
 	
 	@Test
 	public void when_GridItemProvided_then_CanExtractLinkToDetailPage() {
+		
 		String content;
 		try {
 			content = FileUtils.readFileToString(new File("src/test/resources/gridItem.html"), StandardCharsets.UTF_8);
@@ -79,6 +80,7 @@ public class ScrapeToolTest {
 	
 	@Test
 	public void when_ProductInfoReadFromLink_then_CanExtractTheFourRequiredAttributes() {
+		
 		String content;
 		try {
 			content = FileUtils.readFileToString(new File("src/test/resources/product-detail-page-source.html"), StandardCharsets.UTF_8);
@@ -98,5 +100,19 @@ public class ScrapeToolTest {
 		assertEquals(pricePerUnit, new BigDecimal(1.75));
 		String description = pageProcessor.getDescription(productContent);
 		assertEquals(description, "by Sainsbury's strawberries");
+	}
+	
+	@Test
+	public void when_NotNullContentStringProvided_then_CanReturnJSONResponseAsExpected() {
+		String content;
+		try {
+			content = FileUtils.readFileToString(new File("src/test/resources/product-detail-page-source.html"), StandardCharsets.UTF_8);
+		}
+		catch (IOException e) {
+			fail("Could not read source file from test resources");
+			return;
+		}
+		String processedJSON = pageProcessor.getProcessedJSON(content);
+		assertNotNull(processedJSON);
 	}
 }
