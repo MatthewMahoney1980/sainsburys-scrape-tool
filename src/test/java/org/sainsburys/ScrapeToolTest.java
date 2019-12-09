@@ -103,7 +103,7 @@ public class ScrapeToolTest {
 	}
 	
 	@Test
-	public void when_NotNullContentStringProvided_then_CanReturnJSONResponseAsExpected() {
+	public void when_NotNullContentStringProvided_then_CanReturnNotNullStringResponse() {
 		String content;
 		try {
 			content = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
@@ -114,5 +114,28 @@ public class ScrapeToolTest {
 		}
 		String processedJSON = pageProcessor.getProcessedJSON(content);
 		assertNotNull(processedJSON);
+	}
+	
+	@Test
+	public void when_ProperContentStringProvided_then_CanReturnProperJSONResponse() {
+		String content;
+		try {
+			content = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
+		}
+		catch (IOException e) {
+			fail("Could not read source file from test resources");
+			return;
+		}
+		
+		String expectedJSON;
+		try {
+			expectedJSON = FileUtils.readFileToString(new File("src/test/resources/expectedOutput.json"), StandardCharsets.UTF_8);
+		}
+		catch (IOException e) {
+			fail("Could not read expectedJSON from test resources");
+			return;
+		}
+		String processedJSON = pageProcessor.getProcessedJSON(content);
+		assertEquals(processedJSON, expectedJSON);
 	}
 }
