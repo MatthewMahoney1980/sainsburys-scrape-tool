@@ -26,7 +26,7 @@ public class ScrapeToolTest {
 	}
 	
 	@Test
-	public void when_ReadingFromURL_then_ValidContentReturned(){
+	public void when_ReadingFromSourceURL_then_ExpectedContentReturned(){
 		PageReader pageReader = new PageReader();
 		String url = "https://jsainsburyplc.github.io/serverside-test/site/www.sainsburys.co.uk/webapp/wcs/stores/servlet/gb/groceries/berries-cherries-currants6039.html";
 		String content = null;
@@ -36,7 +36,15 @@ public class ScrapeToolTest {
 		catch (Exception e) {
 			fail("Could not read source data from url: " + url);
 		}
-		assertNotNull(content);
+		String expectedContent;
+		try {
+			expectedContent = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
+		}
+		catch (IOException e) {
+			fail("Could not read expectedContent from test resources");
+			return;
+		}
+		assertEquals(content, expectedContent);
 	}
 	
 	@Test
