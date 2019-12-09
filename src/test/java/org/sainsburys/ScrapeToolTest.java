@@ -94,8 +94,8 @@ public class ScrapeToolTest {
 		assertNotNull(productContent);
 		String title = pageProcessor.getTitle(productContent);
 		assertEquals(title, "Sainsbury's Strawberries 400g");
-		int kcalValue = pageProcessor.getKcalPer100g(productContent);
-		assertEquals(kcalValue, 33);
+		Integer kcalValue = pageProcessor.getKcalPer100g(productContent);
+		assertEquals(kcalValue, new Integer(33));
 		BigDecimal pricePerUnit = pageProcessor.getPricePerUnit(productContent);
 		assertEquals(pricePerUnit, new BigDecimal(1.75));
 		String description = pageProcessor.getDescription(productContent);
@@ -106,7 +106,7 @@ public class ScrapeToolTest {
 	public void when_NotNullContentStringProvided_then_CanReturnJSONResponseAsExpected() {
 		String content;
 		try {
-			content = FileUtils.readFileToString(new File("src/test/resources/product-detail-page-source.html"), StandardCharsets.UTF_8);
+			content = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
 		}
 		catch (IOException e) {
 			fail("Could not read source file from test resources");
