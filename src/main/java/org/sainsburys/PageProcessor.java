@@ -111,6 +111,7 @@ public class PageProcessor {
 		
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		String json = gson.toJson(scrapedPage);
+		json = json.replace("\\u0027", "'").replace("\\u0026", "&");
 		
 		return json;
 	}
