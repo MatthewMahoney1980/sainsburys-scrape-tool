@@ -1,6 +1,6 @@
-# Project Title
+# Sainsbury's Scrape Tool
 
-Sainsburys Scrape Tool
+Simple application for scraping contents of product page found at provided URL.
 
 ## Getting Started
 
