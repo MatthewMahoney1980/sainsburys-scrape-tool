@@ -32,7 +32,7 @@ Having compiled successfully, the application can then be run from the project r
 
 > java -jar target/sainsburys-scrape-tool-jar-with-dependencies.jar -Durl=https://jsainsburyplc.github.io/serverside-test/site/www.sainsburys.co.uk/webapp/wcs/stores/servlet/gb/groceries/berries-cherries-currants6039.html
 
-If you want to also export the processed JSON to a specific file, you can provide that with -Doutputfile={path to file}, eg.:
+If you want to also export the processed JSON to a specific file, you can provide that with -DoutputFile={path to file}, eg.:
 
 > java -jar target/sainsburys-scrape-tool-jar-with-dependencies.jar -Durl=https://jsainsburyplc.github.io/serverside-test/site/www.sainsburys.co.uk/webapp/wcs/stores/servlet/gb/groceries/berries-cherries-currants6039.html -DoutputFile=processedOutput.json
 
