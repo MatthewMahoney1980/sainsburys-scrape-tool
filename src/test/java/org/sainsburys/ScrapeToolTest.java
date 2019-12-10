@@ -17,12 +17,20 @@ import org.junit.Test;
 
 public class ScrapeToolTest {
 	
-	public static PageProcessor pageProcessor;
+	private static PageProcessor pageProcessor;
+	private static String pageContent;
 	
 	@BeforeClass
 	public static void setup() {
 		System.setProperty("https.protocols", "TLSv1.2");
 		pageProcessor = new PageProcessor();
+		try {
+			pageContent = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
+		}
+		catch (IOException e) {
+			fail("Could not read page-source.html from test resources");
+			return;
+		}
 	}
 	
 	@Test
@@ -36,30 +44,12 @@ public class ScrapeToolTest {
 		catch (Exception e) {
 			fail("Could not read source data from url: " + url);
 		}
-		String expectedContent;
-		try {
-			expectedContent = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
-		}
-		catch (IOException e) {
-			fail("Could not read expectedContent from test resources");
-			return;
-		}
-		assertEquals(content, expectedContent);
+		assertEquals(content, pageContent);
 	}
 	
 	@Test
 	public void when_NotNullContentStringProvided_then_CanExtractAllGridItemElements() {
-		
-		String content;
-		try {
-			content = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
-		}
-		catch (IOException e) {
-			fail("Could not read source file from test resources");
-			return;
-		}
-		
-		Elements elements = pageProcessor.getAllElementsOfType(content, "li.gridItem");
+		Elements elements = pageProcessor.getAllElementsOfType(pageContent, "li.gridItem");
 		for (Element element : elements) {
 			assertEquals(element.tagName(), "li");
 			assertEquals(element.attr("class"), "gridItem");
@@ -112,29 +102,12 @@ public class ScrapeToolTest {
 	
 	@Test
 	public void when_NotNullContentStringProvided_then_CanReturnNotNullStringResponse() {
-		String content;
-		try {
-			content = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
-		}
-		catch (IOException e) {
-			fail("Could not read source file from test resources");
-			return;
-		}
-		String processedJSON = pageProcessor.getProcessedJSON(content);
+		String processedJSON = pageProcessor.getProcessedJSON(pageContent);
 		assertNotNull(processedJSON);
 	}
 	
 	@Test
 	public void when_ProperContentStringProvided_then_CanReturnProperJSONResponse() {
-		String content;
-		try {
-			content = FileUtils.readFileToString(new File("src/test/resources/page-source.html"), StandardCharsets.UTF_8);
-		}
-		catch (IOException e) {
-			fail("Could not read source file from test resources");
-			return;
-		}
-		
 		String expectedJSON;
 		try {
 			expectedJSON = FileUtils.readFileToString(new File("src/test/resources/expectedOutput.json"), StandardCharsets.UTF_8);
@@ -143,7 +116,7 @@ public class ScrapeToolTest {
 			fail("Could not read expectedJSON from test resources");
 			return;
 		}
-		String processedJSON = pageProcessor.getProcessedJSON(content);
+		String processedJSON = pageProcessor.getProcessedJSON(pageContent);
 		assertEquals(processedJSON, expectedJSON);
 	}
 }
